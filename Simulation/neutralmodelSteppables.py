@@ -20,7 +20,8 @@ class GrowthSteppable(SteppableBasePy):
     def __init__(self,_simulator,_frequency=1):
         SteppableBasePy.__init__(self,_simulator,_frequency)
     def step(self,mcs):
-        for cell in self.cellList:            cellNeighborList=self.getCellNeighbors(cell) # generates list of neighbors of cell 'cell'                        totnbr = 0
+        for cell in self.cellList:
+            cellNeighborList=self.getCellNeighbors(cell) # generates list of neighbors of cell 'cell'                        totnbr = 0
             count = 0            for nbr in cellNeighborList:                if nbr.neighborAddress:                    totnbr += 1
                     if nbr.neighborAddress.type == 1:                        count += 1            w =  0.5            benefit = 2.0            cost = 1.0            if cell.type==1:               f = 1.0 - w + w*(benefit*(count+1.0)/(totnbr+1) - cost)            else:               f = 1.0 - w + w*(benefit*count/(totnbr+1))#            if count>totnbr/2.0:            cell.targetVolume+=f
         
