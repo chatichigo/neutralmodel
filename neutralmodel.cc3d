@@ -1,0 +1,5 @@
+<Simulation version="3.6.2">
+   <XMLScript Type="XMLScript">Simulation/neutralmodel.xml</XMLScript>
+   <PythonScript Type="PythonScript">Simulation/neutralmodel.py</PythonScript>
+   <Resource Type="Python">Simulation/neutralmodelSteppables.py</Resource>
+</Simulation>
