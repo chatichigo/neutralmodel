@@ -23,9 +23,9 @@ class GrowthSteppable(SteppableBasePy):
         for cell in self.cellList:
             cellNeighborList=self.getCellNeighbors(cell) # generates list of neighbors of cell 'cell'                        totnbr = 0
             count = 0            for nbr in cellNeighborList:                if nbr.neighborAddress:                    totnbr += 1
-                    if nbr.neighborAddress.type == 1:                        count += 1            w =  0.5            benefit = 2.0            cost = 1.0            if cell.type==1:               f = 1.0 - w + w*(benefit*(count+1.0)/(totnbr+1) - cost)            else:               f = 1.0 - w + w*(benefit*count/(totnbr+1))#            if count>totnbr/2.0:            cell.targetVolume+=f
-        
-
+                    if nbr.neighborAddress.type == 1:                        count += 1            w =  0.5            benefit = 2.0            cost = 1.0#       The first option is just a linear function of the number of neighbours                #        if cell.type==1:    #           f = 1.0 - w + w*(benefit*(count+1.0)/(totnbr+1) - cost)    #        else:    #           f = 1.0 - w + w*(benefit*count/(totnbr+1))#            if count>totnbr/2.0:#       Here is a function with synergy and discounting                        factor = 0.6 # try out values above and below 1
+            if cell.type==1:               f = benefit*(1-pow(factor,count))/(1-factor) - cost            else:               f = benefit*(1-pow(factor,count))/(1-factor)                           cell.targetVolume+=f            
+#       Now it would be nice to have a function which is actually relevant to the cell environment the idea is as follows #       each cell gets gamma from the nutrient medium#       if a cell is a cooperaor then it donates delta = gamma * 0.1 and gets delta from each of its cooperators #       therefore f = gamma + delta*count - 1)#       and for a defector f = gamma + delta *count#       in this way maybe we can incorporate hte nutrient function in the fitness.#       Also it would be nice if we could control which function to implement from the player menu if that is possible!! (like to choose linear, synergy/disciunting, nutrient etc.)                        
 class MitosisSteppable(MitosisSteppableBase):
     def __init__(self,_simulator,_frequency=1):
         MitosisSteppableBase.__init__(self,_simulator, _frequency)
